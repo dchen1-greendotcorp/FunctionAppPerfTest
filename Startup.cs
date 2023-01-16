@@ -42,8 +42,10 @@ namespace FunctionAppPerfTest
             
             builder.Services.AddSingleton<IMaskHandler, SSNMaskHandler>();
 
-            builder.Services.AddSingleton(sp =>
-                new MapperConfiguration(conf => { conf.AddProfile(new MapperProfile()); }).CreateMapper());
+            //builder.Services.AddSingleton(sp =>
+            //    new MapperConfiguration(conf => { conf.AddProfile(new MapperProfile()); }).CreateMapper());
+
+            builder.Services.AddAutoMapper(typeof(Startup));
 
             builder.Services.AddMediatR(Assembly.GetExecutingAssembly());
 
