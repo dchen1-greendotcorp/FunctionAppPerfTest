@@ -37,7 +37,7 @@ namespace FunctionAppPerfTest.Orchestrators
             var getCardPanActivityResult = await context.CallActivityAsync<ClearTextPan>(nameof(AccountOrchestrationActivities.GetCardPan),
                     new GetClearTextPanRequest
                     {
-                        OtherData = DataFactory.CreateFakeData(),
+                        OtherData = DataFactory.CreateFakeCharacterData(2000),
                         RequestId = requestContext.RequestId
                     });
 
@@ -45,7 +45,7 @@ namespace FunctionAppPerfTest.Orchestrators
             var parallelTaskList = new List<Task<ActivityOrSubOrchResponse>>();
 
             var registerCardTask = context.CallActivityAsync<ActivityOrSubOrchResponse>(nameof(AccountOrchestrationActivities.RegisterCard),
-                new RegisterCardActivityData { OtherData = DataFactory.CreateFakeData(), CreateAccountRequest = requestContext });
+                new RegisterCardActivityData { OtherData = DataFactory.CreateFakeCharacterData(4000), CreateAccountRequest = requestContext, Pan= getCardPanActivityResult.Pan });
 
             parallelTaskList.Add(registerCardTask);
 
@@ -53,8 +53,8 @@ namespace FunctionAppPerfTest.Orchestrators
             var UpdateCardRegistrationTask = context.CallActivityAsync<ActivityOrSubOrchResponse>(nameof(AccountOrchestrationActivities.UpdateCardRegistrationStatus),
                 new UpdateCardRegisterStatusRequest
                 {
-                    PlasticId = createCardAccountResult.CardAccountId,
-                    OtherRequestData = DataFactory.CreateFakeData(),
+                    PlasticId = $"PlasticId-{createCardAccountResult.CardAccountId}",
+                    OtherRequestData = DataFactory.CreateFakeCharacterData(2000),
                 });
 
             parallelTaskList.Add(UpdateCardRegistrationTask);
@@ -63,8 +63,8 @@ namespace FunctionAppPerfTest.Orchestrators
             var UpdateCardStatusTask = context.CallActivityAsync<ActivityOrSubOrchResponse>(nameof(AccountOrchestrationActivities.UpdateCardStatus),
                 new UpdateCardStatusRequest
                 {
-                    PlasticId = createCardAccountResult.CardAccountId,
-                    OtherRequestData= DataFactory.CreateFakeData(),
+                    PlasticId = $"PlasticId-{createCardAccountResult.CardAccountId}",
+                    OtherRequestData= DataFactory.CreateFakeCharacterData(2000),
                 });
 
             parallelTaskList.Add(UpdateCardStatusTask);
@@ -74,7 +74,7 @@ namespace FunctionAppPerfTest.Orchestrators
             var res = resultList1.First(c => c.ActivityName == nameof(AccountOrchestrationActivities.RegisterCard)).Data as RegisterCardResponse;
 
             responseContext.Data.CardID = res.Data.CardID;
-            responseContext.Data.OtherData = DataFactory.CreateFakeData();
+            responseContext.Data.OtherData = DataFactory.CreateFakeCharacterData(4000);
 
            return responseContext;
         }

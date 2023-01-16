@@ -12,6 +12,7 @@ namespace FunctionAppPerfTest
             MapCreateDdaAccountRequestToCreateCardAccountRequest();
             MapCreateCardAccountResponseToCreateAccountResponse();
             MapCreateCardAccountResponseToAddCardAccountActivityData();
+            MapRegisterCardActivityDataToRegisterCardRequest();
         }
         void MapCreateDdaAccountRequestToCreateCardAccountRequest()
         {
@@ -39,6 +40,12 @@ namespace FunctionAppPerfTest
                     opt => opt.MapFrom(s => s.Data.OtherData));
         }
 
+        void MapRegisterCardActivityDataToRegisterCardRequest()
+        {
+            CreateMap<RegisterCardActivityData, RegisterCardRequest>()
+                .ForMember(d => d.RequestId, opt => opt.MapFrom(s => s.CreateAccountRequest.RequestId))
+                .ForMember(d => d.CreateAccountRequest, opt => opt.MapFrom(s => s.CreateAccountRequest));
+        }
         void MapRegisterCardResponseToRegisterCardActivityData()
         {
             CreateMap<RegisterCardResponse, RegisterCardActivityData>()

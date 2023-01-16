@@ -1,4 +1,5 @@
 ﻿using DurableTask.Core.Exceptions;
+using FunctionAppPerfTest.Factories;
 using FunctionAppPerfTest.Models;
 using MediatR;
 using Microsoft.Extensions.Configuration;
@@ -15,7 +16,7 @@ namespace FunctionAppPerfTest.Handlers
 
         public RegisterCardRequestHandler(IConfiguration configuration)
         {
-            _millSeconds = int.Parse(configuration["RegisterCardRequestDelay"]);
+            _millSeconds = int.Parse(configuration["AciCreateAccountApiMiliSecond:RegisterCard"]);
         }
 
         public async Task<RegisterCardResponse> Handle(RegisterCardRequest request, CancellationToken cancellationToken)
@@ -27,6 +28,12 @@ namespace FunctionAppPerfTest.Handlers
                 await Task.Delay(_millSeconds);
 
                 RegisterCardResponse response = new RegisterCardResponse();
+                response.Data = new RegisterCardResponseData() 
+                { 
+                    CardID = $"CardID-{DataFactory.CreateUtcData()}",
+                    CreateAccountRequest= request.CreateAccountRequest,
+                };
+
                 return response!;
             }
             catch (Exception e) when (e is not TaskFailureException)

@@ -15,7 +15,7 @@ namespace FunctionAppPerfTest.Handlers
 
         public UpdateCardRegisterStatusRequestHandler(IConfiguration configuration)
         {
-            _millSeconds = int.Parse(configuration["UpdateCardRegisterStatusRequestDelay"]);
+            _millSeconds = int.Parse(configuration["AciCreateAccountApiMiliSecond:UpdateCardRegistrationStatus"]);
         }
 
         public async Task<UpdateCardRegisterStatusResponse> Handle(UpdateCardRegisterStatusRequest request, CancellationToken cancellationToken)
@@ -27,6 +27,11 @@ namespace FunctionAppPerfTest.Handlers
                 await Task.Delay(_millSeconds);
 
                 UpdateCardRegisterStatusResponse response = new UpdateCardRegisterStatusResponse();
+                response.Data = new UpdateCardRegisterStatusResponseData()
+                {
+                   PlasticId = request.PlasticId,
+                   OtherData = request.OtherRequestData
+                };
                 return response!;
             }
             catch (Exception e) when (e is not TaskFailureException)

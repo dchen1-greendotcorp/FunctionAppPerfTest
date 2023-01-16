@@ -1,4 +1,5 @@
 ﻿using DurableTask.Core.Exceptions;
+using FunctionAppPerfTest.Factories;
 using FunctionAppPerfTest.Models;
 using MediatR;
 using Microsoft.Extensions.Configuration;
@@ -18,7 +19,7 @@ namespace FunctionAppPerfTest.Handlers
 
         public GetCardClearTextCardPanHandler(IConfiguration configuration)
         {
-            _millSeconds = int.Parse(configuration["GetCardClearTextCardPanDelay"]);
+            _millSeconds = int.Parse(configuration["AciCreateAccountApiMiliSecond:GetCardPan"]);
         }
         
 
@@ -30,6 +31,7 @@ namespace FunctionAppPerfTest.Handlers
             {
                 await Task.Delay(_millSeconds);
                 var response = new GetClearTextPanResponse();
+                response.Data = new ClearTextPan() { Pan = $"Pan-{DataFactory.CreateUtcData()}" };
                 return response!;
             }
             catch (Exception e) when (e is not TaskFailureException)

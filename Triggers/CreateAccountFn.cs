@@ -43,19 +43,6 @@ namespace FunctionAppPerfTest.Triggers
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post")] HttpRequestMessage req,
             [DurableClient] IDurableOrchestrationClient context)
         {
-            //var request = await req.Content.ReadAsAsync<CreateAccountRequest>();
-
-            //var orchestrationId = $"{request.Header.ProgramCode}.{request.GetType().Name}.{request.Header.RequestId}";
-
-
-            //// Function input comes from the request content.
-            //string instanceId = await starter.StartNewAsync("Function", null);
-
-            //log.LogInformation($"Started orchestration with ID = '{instanceId}'.");
-
-            //return starter.CreateCheckStatusResponse(req, instanceId);
-
-
             var result = await ExecuteAsync(nameof(GPRAccountOrchestrators.CreateGPRAccount), context);
             return new ObjectResult(result);
         }

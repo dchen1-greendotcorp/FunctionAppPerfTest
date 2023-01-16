@@ -1,4 +1,5 @@
 ﻿using DurableTask.Core.Exceptions;
+using FunctionAppPerfTest.Factories;
 using FunctionAppPerfTest.Models;
 using MediatR;
 using Microsoft.Extensions.Configuration;
@@ -15,7 +16,7 @@ namespace FunctionAppPerfTest.Handlers
 
         public ReplaceCardRequestHandler(IConfiguration configuration)
         {
-            _millSeconds = int.Parse(configuration["ReplaceCardRequestDelay"]);
+            _millSeconds = int.Parse(configuration["AciOrderCardApiMiliSecond:ReplaceCard"]);
         }
 
         public async Task<ReplaceCardResponse> Handle(ReplaceCardRequest request, CancellationToken cancellationToken)
@@ -27,6 +28,7 @@ namespace FunctionAppPerfTest.Handlers
                 await Task.Delay(_millSeconds);
 
                 ReplaceCardResponse response = new ReplaceCardResponse();
+                response.Data = new ReplaceCardExternalResponse() { Message = $"good-{DataFactory.CreateUtcData()}" };
                 return response!;
             }
             catch (Exception e) when (e is not TaskFailureException)

@@ -11,9 +11,9 @@ namespace FunctionAppPerfTest.Models
 {
     public class RegisterCardRequest : BaseRequest, IRequest<RegisterCardResponse>, IBaseRequest
     {
-        public string CardId { get; set; }
+        //public string CardId { get; set; }
 
-        public dynamic OtherData { get; set; } 
+        public CreateAccountRequest CreateAccountRequest { get; set; }
 
     }
 }

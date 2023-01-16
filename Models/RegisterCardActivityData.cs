@@ -9,6 +9,7 @@ namespace FunctionAppPerfTest.Models
     public class RegisterCardActivityData
     {
         public CreateAccountRequest CreateAccountRequest { get; set; }
+        public string Pan { get; set; }
         public dynamic OtherData { get; set; }
     }
 }

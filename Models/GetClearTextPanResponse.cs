@@ -14,6 +14,6 @@ namespace FunctionAppPerfTest.Models
 
     public class ClearTextPan
     {
-        public dynamic PanData { get; set; }
+        public string Pan { get; set; }
     }
 }
