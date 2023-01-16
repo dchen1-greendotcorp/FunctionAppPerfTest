@@ -22,6 +22,7 @@ namespace FunctionAppPerfTest
             //settings include app insight connection
             builder.ConfigurationBuilder
                 .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile($"host.json", optional: false, reloadOnChange: true)
                 .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
                 .AddEnvironmentVariables();
 

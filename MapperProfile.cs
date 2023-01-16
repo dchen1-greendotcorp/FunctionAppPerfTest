@@ -46,13 +46,6 @@ namespace FunctionAppPerfTest
                 .ForMember(d => d.RequestId, opt => opt.MapFrom(s => s.CreateAccountRequest.RequestId))
                 .ForMember(d => d.CreateAccountRequest, opt => opt.MapFrom(s => s.CreateAccountRequest));
         }
-        void MapRegisterCardResponseToRegisterCardActivityData()
-        {
-            CreateMap<RegisterCardResponse, RegisterCardActivityData>()
-
-                .ForMember(d => d.CreateAccountRequest, opt => opt.MapFrom(s => s.Data.CreateAccountRequest))
-                .ForMember(d => d.OtherData,
-                    opt => opt.MapFrom(s => s.Data.CardID));
-        }
+        
     }
 }
