@@ -64,7 +64,11 @@ namespace FunctionAppPerfTest
             //});
 
             //log startup information
-            //var serviceProvider = builder.Services.BuildServiceProvider();
+            var serviceProvider = builder.Services.BuildServiceProvider();
+            var provider=serviceProvider.GetRequiredService<ILoggerProvider>();
+            var logger = provider.CreateLogger("Startup");
+            logger.LogInformation("Got Here in Startup");
+
             //var GDLoggerProvider = serviceProvider.GetRequiredService<GDApplicationInsightsLoggerProvider>();
             //var logger = GDLoggerProvider.CreateLogger("Startup");
             //logger.LogInformation("Got Here in Startup");
