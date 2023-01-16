@@ -13,6 +13,4 @@ namespace FunctionAppPerfTest.Models
         public string AccountId { get; set; }
         public dynamic OtherRequestData { get; set; }
     }
-
-    
 }

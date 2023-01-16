@@ -19,33 +19,13 @@ using static System.Net.Mime.MediaTypeNames;
 
 namespace FunctionAppPerfTest.Triggers
 {
-    public class PerfFunction : BaseFunction<CreateAccountRequest, CreateAccountResponse>
+    public class CreateAccountFn : BaseFunction<CreateAccountRequest, CreateAccountResponse>
     {
-        public PerfFunction(ILogger logger) : base(logger)
+        public CreateAccountFn(ILogger logger) : base(logger)
         {
 
         }
-        [FunctionName("Function")]
-        public static async Task<List<string>> RunOrchestrator(
-            [OrchestrationTrigger] IDurableOrchestrationContext context)
-        {
-            var outputs = new List<string>();
-
-            // Replace "hello" with the name of your Durable Activity Function.
-            outputs.Add(await context.CallActivityAsync<string>(nameof(SayHello), "Tokyo"));
-            outputs.Add(await context.CallActivityAsync<string>(nameof(SayHello), "Seattle"));
-            outputs.Add(await context.CallActivityAsync<string>(nameof(SayHello), "London"));
-
-            // returns ["Hello Tokyo!", "Hello Seattle!", "Hello London!"]
-            return outputs;
-        }
-
-        [FunctionName(nameof(SayHello))]
-        public static string SayHello([ActivityTrigger] string name, ILogger log)
-        {
-            log.LogInformation($"Saying hello to {name}.");
-            return $"Hello {name}!";
-        }
+        
 
         [FunctionName(nameof(CreateAccount))]
         [OpenApiOperation(operationId: nameof(CreateAccount), tags: new[] { "accounts" },
