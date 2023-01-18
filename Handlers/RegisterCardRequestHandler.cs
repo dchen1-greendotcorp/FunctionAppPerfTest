@@ -25,15 +25,13 @@ namespace FunctionAppPerfTest.Handlers
                 throw new TaskFailureException(HttpStatusCode.BadRequest.ToString(), nameof(RegisterCardRequest));
             try
             {
-                await Task.Delay(_millSeconds);
-
                 RegisterCardResponse response = new RegisterCardResponse();
                 response.Data = new RegisterCardResponseData() 
                 { 
                     CardID = $"CardID-{DataFactory.CreateUtcData()}",
                     CreateAccountRequest= request.CreateAccountRequest,
                 };
-
+                await Task.Delay(_millSeconds);
                 return response!;
             }
             catch (Exception e) when (e is not TaskFailureException)

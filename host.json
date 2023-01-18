@@ -22,8 +22,7 @@
         "controlQueueVisibilityTimeout": "00:05:00",
         "maxQueuePollingInterval": "00:00:30",
         "partitionCount": 6,
-        "trackingStoreConnectionStringName": "TrackingStorage",
-        "trackingStoreNamePrefix": "DurableTask",
+        "trackingStoreConnectionStringName": "AzureWebJobsStorage",
         "useLegacyPartitionManagement": true,
         "workItemQueueVisibilityTimeout": "00:05:00"
       },

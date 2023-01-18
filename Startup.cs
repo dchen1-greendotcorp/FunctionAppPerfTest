@@ -5,12 +5,13 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System.IO;
-using FunctionAppLoggerTest.MaskHandlers;
-using GreenDotLogger;
 using FunctionAppPerfTest;
 using AutoMapper;
 using System.Reflection;
 using MediatR;
+using System.Linq;
+using GreenDotLogger;
+using FunctionAppLoggerTest.MaskHandlers;
 
 [assembly: FunctionsStartup(typeof(Startup))]
 namespace FunctionAppPerfTest
@@ -64,13 +65,23 @@ namespace FunctionAppPerfTest
             //});
 
             //log startup information
-            var serviceProvider = builder.Services.BuildServiceProvider();
-            var provider=serviceProvider.GetRequiredService<ILoggerProvider>();
-            var logger = provider.CreateLogger("Startup");
-            logger.LogInformation("Got Here in Startup");
+            //var list=builder.Services.Where(c => c.ServiceType == typeof(ILoggerProvider)).ToList();
+            //var loggers = builder.Services.Where(c => c.ServiceType == typeof(ILogger)).ToList();
+            //if (loggers.Any())
+            //{
+            //    var serviceProvider = builder.Services.BuildServiceProvider();
+            //    var provider = serviceProvider.GetRequiredService<ILogger>();
+            //}
+
+            //var serviceProvider = builder.Services.BuildServiceProvider();
+            //var loggers=serviceProvider.GetServices<ILogger>();
+            //var provider = serviceProvider.GetRequiredService<ILoggerProvider>();
+            //var logger = provider.CreateLogger("Startup");
+            //logger.LogInformation("Got Here in Startup");
 
             //var GDLoggerProvider = serviceProvider.GetRequiredService<GDApplicationInsightsLoggerProvider>();
             //var logger = GDLoggerProvider.CreateLogger("Startup");
+
             //logger.LogInformation("Got Here in Startup");
         }
     }

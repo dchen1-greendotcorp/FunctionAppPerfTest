@@ -24,14 +24,13 @@ namespace FunctionAppPerfTest.Handlers
                 throw new TaskFailureException(HttpStatusCode.BadRequest.ToString(), nameof(UpdateCardRegisterStatusRequest));
             try
             {
-                await Task.Delay(_millSeconds);
-
                 UpdateCardRegisterStatusResponse response = new UpdateCardRegisterStatusResponse();
                 response.Data = new UpdateCardRegisterStatusResponseData()
                 {
                    PlasticId = request.PlasticId,
                    OtherData = request.OtherRequestData
                 };
+                await Task.Delay(_millSeconds);
                 return response!;
             }
             catch (Exception e) when (e is not TaskFailureException)

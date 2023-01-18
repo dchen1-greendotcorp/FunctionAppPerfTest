@@ -40,7 +40,7 @@ namespace FunctionAppPerfTest.Triggers
         [OpenApiResponseWithBody(statusCode: HttpStatusCode.BadGateway, contentType: Application.Json,
             bodyType: typeof(BaseResponse<>))]
         public async Task<IActionResult> CreateAccount(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post")] HttpRequestMessage req,
+            [HttpTrigger(AuthorizationLevel.Anonymous, "post")] HttpRequestMessage request,
             [DurableClient] IDurableOrchestrationClient context)
         {
             var result = await ExecuteAsync(nameof(GPRAccountOrchestrators.CreateGPRAccount), context);

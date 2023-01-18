@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using FunctionAppPerfTest.Activities;
 using FunctionAppPerfTest.Factories;
+using Newtonsoft.Json;
 
 namespace FunctionAppPerfTest.Orchestrators
 {
@@ -31,8 +32,10 @@ namespace FunctionAppPerfTest.Orchestrators
 
             var resultList = await Task.WhenAll(parallelTasks);
 
-            var createCardAccountResult = resultList.First(c => c.ActivityName == nameof(AccountOrchestrationActivities.AddCardAccount)).Data as AddCardAccountActivityData;
+            var result=resultList.First(c => c.ActivityName == nameof(AccountOrchestrationActivities.AddCardAccount));
+            var json=JsonConvert.SerializeObject(result.Data);
 
+            AddCardAccountActivityData createCardAccountResult = JsonConvert.DeserializeObject<AddCardAccountActivityData>(json);//result.Data as AddCardAccountActivityData;
 
             var getCardPanActivityResult = await context.CallActivityAsync<ClearTextPan>(nameof(AccountOrchestrationActivities.GetCardPan),
                     new GetClearTextPanRequest
@@ -71,9 +74,12 @@ namespace FunctionAppPerfTest.Orchestrators
 
             var resultList1 = await Task.WhenAll(parallelTaskList);
 
-            var res = resultList1.First(c => c.ActivityName == nameof(AccountOrchestrationActivities.RegisterCard)).Data as RegisterCardResponse;
+            var res = resultList1.First(c => c.ActivityName == nameof(AccountOrchestrationActivities.RegisterCard));//.Data as RegisterCardResponse;
+            json = JsonConvert.SerializeObject(res.Data);
 
-            responseContext.Data.CardID = res.Data.CardID;
+            RegisterCardResponse resp = JsonConvert.DeserializeObject<RegisterCardResponse>(json);
+
+            responseContext.Data.CardID = resp.Data.CardID;
             responseContext.Data.OtherData = DataFactory.CreateFakeCharacterData(4000);
 
            return responseContext;

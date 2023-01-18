@@ -25,10 +25,9 @@ namespace FunctionAppPerfTest.Handlers
                 throw new TaskFailureException(HttpStatusCode.BadRequest.ToString(), nameof(ReplaceCardRequest));
             try
             {
-                await Task.Delay(_millSeconds);
-
                 ReplaceCardResponse response = new ReplaceCardResponse();
                 response.Data = new ReplaceCardExternalResponse() { Message = $"good-{DataFactory.CreateUtcData()}" };
+                await Task.Delay(_millSeconds);
                 return response!;
             }
             catch (Exception e) when (e is not TaskFailureException)

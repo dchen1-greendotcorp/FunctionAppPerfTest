@@ -24,10 +24,9 @@ namespace FunctionAppPerfTest.Handlers
                 throw new TaskFailureException(HttpStatusCode.BadRequest.ToString(), nameof(UpdateCardStatusRequest));
             try
             {
-                await Task.Delay(_millSeconds);
-
                 UpdateCardStatusResponse response = new UpdateCardStatusResponse();
-                
+
+                await Task.Delay(_millSeconds);
                 return response!;
             }
             catch (Exception e) when (e is not TaskFailureException)

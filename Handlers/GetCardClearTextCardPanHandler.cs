@@ -29,9 +29,9 @@ namespace FunctionAppPerfTest.Handlers
                 throw new TaskFailureException(HttpStatusCode.BadRequest.ToString(), nameof(GetClearTextPanRequest));
             try
             {
-                await Task.Delay(_millSeconds);
                 var response = new GetClearTextPanResponse();
                 response.Data = new ClearTextPan() { Pan = $"Pan-{DataFactory.CreateUtcData()}" };
+                await Task.Delay(_millSeconds);
                 return response!;
             }
             catch (Exception e) when (e is not TaskFailureException)
