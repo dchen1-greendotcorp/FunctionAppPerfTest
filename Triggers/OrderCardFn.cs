@@ -36,7 +36,7 @@ namespace FunctionAppPerfTest.Triggers
         [OpenApiResponseWithBody(statusCode: HttpStatusCode.BadGateway, contentType: Application.Json,
             bodyType: typeof(BaseResponse<>))]
         public async Task<IActionResult> OrderCard(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "post")] HttpRequestMessage req,
+            [HttpTrigger(AuthorizationLevel.Anonymous, "post")] HttpRequestMessage request,
             [DurableClient] IDurableOrchestrationClient context)
         {
             var result = await ExecuteAsync(nameof(OrderCardOrchestrators.OrderCardOrchestrator), context);
