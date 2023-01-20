@@ -21,7 +21,7 @@
         "controlQueueBufferThreshold": 256,
         "controlQueueVisibilityTimeout": "00:05:00",
         "maxQueuePollingInterval": "00:00:30",
-        "partitionCount": 6,
+        "partitionCount": 16,
         "trackingStoreConnectionStringName": "AzureWebJobsStorage",
         "useLegacyPartitionManagement": true,
         "workItemQueueVisibilityTimeout": "00:05:00"
@@ -30,8 +30,8 @@
         "traceInputsAndOutputs": false,
         "traceReplayEvents": false
       },
-      "maxConcurrentActivityFunctions": 100,
-      "maxConcurrentOrchestratorFunctions": 100,
+      "maxConcurrentActivityFunctions": 40,
+      "maxConcurrentOrchestratorFunctions": 40,
       "extendedSessionsEnabled": true,
       "extendedSessionIdleTimeoutInSeconds": 30,
       "useAppLease": true,
