@@ -16,15 +16,9 @@
     "durableTask": {
       "hubName": "MyTaskHub",
       "storageProvider": {
-        "connectionStringName": "AzureWebJobsStorage",
-        "controlQueueBatchSize": 32,
-        "controlQueueBufferThreshold": 256,
-        "controlQueueVisibilityTimeout": "00:05:00",
-        "maxQueuePollingInterval": "00:00:30",
-        "partitionCount": 16,
-        "trackingStoreConnectionStringName": "AzureWebJobsStorage",
-        "useLegacyPartitionManagement": true,
-        "workItemQueueVisibilityTimeout": "00:05:00"
+        "type": "Netherite",
+        "eventHubsConnectionName": "EventHubsConnection",
+        "partitionCount": 32
       },
       "tracing": {
         "traceInputsAndOutputs": false,
@@ -36,7 +30,7 @@
       "extendedSessionIdleTimeoutInSeconds": 30,
       "useAppLease": true,
       "useGracefulShutdown": false,
-      "maxEntityOperationBatchSize": 50
+      "maxEntityOperationBatchSize": 5000
     }
   }
 
